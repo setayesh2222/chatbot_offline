@@ -1,0 +1,146 @@
+🤖 Telegram Bot
+
+A Telegram bot built with Python that can automatically respond to user messages and perform various tasks.
+
+✨ Features
+
+* 💬 Automatic message responses
+* ⚡ Fast and lightweight
+* 🔧 Easy to customize
+* 🔐 Secure token management using environment variables
+* 🐍 Built with Python
+
+🛠️ Technologies
+
+* Python 3.10+
+* Telegram Bot API
+* python-telegram-bot
+
+📋 Requirements
+
+* Python 3.10 or newer
+* A Telegram account
+* A bot token from BotFather
+
+📦 Installation
+
+1. Clone the repository
+
+git clone https://github.com/USERNAME/REPOSITORY.git
+
+2. Navigate to the project directory
+
+cd REPOSITORY
+
+3. Create a virtual environment
+
+python -m venv venv
+
+Activate on Windows:
+
+venv\Scripts\activate
+
+Activate on Linux or macOS:
+
+source venv/bin/activate
+
+4. Install dependencies
+
+pip install python-telegram-bot
+
+🔑 Configuration
+
+1. Open Telegram and search for @BotFather.
+2. Send /newbot and follow the instructions.
+3. Copy your bot token.
+4. Set the token as an environment variable.
+
+Windows PowerShell:
+
+$env:TELEGRAM_BOT_TOKEN="YOUR_BOT_TOKEN"
+
+Linux or macOS:
+
+export TELEGRAM_BOT_TOKEN="YOUR_BOT_TOKEN"
+
+Never publish your bot token on GitHub.
+
+🚀 Usage
+
+Run the bot:
+
+python main.py
+
+💻 Example Code
+
+Create a main.py file:
+
+import os
+from telegram import Update
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    MessageHandler,
+    ContextTypes,
+    filters,
+)
+TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+async def start(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE
+):
+    await update.message.reply_text(
+        "Hello! Welcome to my Telegram bot."
+    )
+async def handle_message(
+    update: Update,
+    context: ContextTypes.DEFAULT_TYPE
+):
+    await update.message.reply_text(
+        f"You said: {update.message.text}"
+    )
+def main():
+    if not TOKEN:
+        raise RuntimeError(
+            "Please set TELEGRAM_BOT_TOKEN first."
+        )
+    app = Application.builder().token(TOKEN).build()
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(
+        MessageHandler(
+            filters.TEXT & ~filters.COMMAND,
+            handle_message
+        )
+    )
+    print("Bot is running...")
+    app.run_polling()
+if name == "__main__":
+    main()
+
+📁 Project Structure
+
+telegram-bot/
+├── main.py
+├── requirements.txt
+├── README.md
+└── .gitignore
+
+📄 requirements.txt
+
+python-telegram-bot
+
+🔒 Security
+
+* Never share your bot token publicly.
+* Store credentials in environment variables.
+* If your token is exposed, revoke it through BotFather and generate a new one.
+
+⚠️ Important Notes
+
+* An internet connection is required for communication with Telegram.
+* The bot must be running for polling-based message handling to work.
+* You can deploy the bot to a server for continuous operation.
+
+📜 License
+
+This project is licensed under the MIT License.
